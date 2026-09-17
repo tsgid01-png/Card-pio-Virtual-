@@ -3,1013 +3,1649 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chico do Caranguejo - Cardápio Digital</title>
+    <title id="pageTitle">Chico do Caranguejo - Cardápio Digital</title>
+    <!-- Google Fonts, Font Awesome Icons & QRCode.js CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
     <style>
         :root {
-            --primary: #d4b273; /* Cor de areia */
-            --primary-dark: #b8955c;
-            --bg-dark: #0a4f6d; /* Fundo azul piscina */
-            --bg-card: #11688c; /* Cartões em azul piscina intermediário */
-            --text-main: #f8fafc;
-            --text-muted: #cbd5e1;
-            --accent: #f7e1b5; /* Destaque areia claro */
+            --primary: #c82333;
+            --primary-dark: #9f1a27;
+            --secondary: #0056b3;
+            --accent: #ff9900;
+            --success: #28a745;
+            --bg-light: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2c3e50;
+            --text-muted: #6c757d;
+            --border-color: #e9ecef;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --radius: 12px;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            padding-bottom: 5rem;
-            overflow-x: hidden;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding-bottom: 90px;
         }
 
-        /* Splash Screen */
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--bg-dark);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-
-        #splash-screen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .crab-animated {
-            width: 140px;
-            height: auto;
-            animation: crabBounce 1.2s infinite alternate ease-in-out;
-            filter: drop-shadow(0px 10px 20px rgba(212, 178, 115, 0.4));
-        }
-
-        .splash-title {
-            margin-top: 1.5rem;
-            color: var(--accent);
-            font-size: 1.4rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        @keyframes crabBounce {
-            0% { transform: scale(0.85) rotate(-4deg); }
-            100% { transform: scale(1.1) rotate(4deg); }
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #11688c, #0a4f6d);
-            padding: 1.5rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--primary);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        /* Top Bar & Header */
+        .top-nav {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 8px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
         }
 
-        .header-title {
-            flex-grow: 1;
+        .top-nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #8b0000 100%);
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 3.5rem 1rem 1.8rem;
             text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.35);
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .store-logo {
+            font-size: 2.5rem;
+            margin-bottom: 4px;
+            display: inline-block;
         }
 
         header h1 {
-            font-size: 1.3rem;
-            color: var(--accent);
-            margin-bottom: 0.2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         header p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            font-size: 0.85rem;
+            opacity: 0.95;
+            margin-top: 4px;
         }
 
-        .admin-lock-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0.5rem;
-            transition: color 0.2s;
-        }
-
-        .admin-lock-btn:hover {
-            color: var(--accent);
-        }
-
-        /* Search & Categories */
-        .search-container {
-            max-width: 600px;
-            margin: 1rem auto;
-            padding: 0 1rem;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border-radius: 25px;
-            border: 1px solid var(--primary);
-            background-color: var(--bg-card);
-            color: #fff;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .search-input:focus {
-            border-color: var(--accent);
-        }
-
-        .categories-container {
+        .store-info-pills {
             display: flex;
-            gap: 0.5rem;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            font-size: 0.75rem;
+        }
+
+        .store-pill {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Controls: Search & Category Filter */
+        .controls {
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            background: white;
+            padding: 10px 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(200, 35, 51, 0.15);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* Categories Scroll */
+        .categories {
+            display: flex;
+            gap: 8px;
             overflow-x: auto;
-            padding: 0.5rem 1rem 1rem 1rem;
+            padding-bottom: 5px;
             scrollbar-width: none;
         }
 
-        .categories-container::-webkit-scrollbar {
-            display: none;
-        }
+        .categories::-webkit-scrollbar { display: none; }
 
         .cat-btn {
-            background-color: var(--bg-card);
-            color: var(--text-muted);
-            border: 1px solid var(--primary);
-            padding: 0.6rem 1.2rem;
+            background: #e9ecef;
+            border: none;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 0.9rem;
-            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
             white-space: nowrap;
-            transition: all 0.2s ease;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .cat-btn.active, .cat-btn:hover {
-            background-color: var(--primary);
-            color: #111;
-            border-color: var(--accent);
-            font-weight: 600;
+        .cat-btn.active {
+            background: var(--primary);
+            color: white;
         }
 
-        .menu-section {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 1rem;
+        /* Main Menu Grid */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 15px;
         }
 
-        /* Menu Layouts */
-        .menu-grid {
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 25px 0 12px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
         }
 
-        @media (min-width: 600px) {
-            .menu-grid.layout-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .menu-grid.layout-grid .food-card {
-            background-color: var(--bg-card);
-            border-radius: 12px;
-            overflow: hidden;
+        .product-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 15px;
+            box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            border: 1px solid var(--primary);
+            justify-content: space-between;
+            position: relative;
             transition: transform 0.2s;
+            overflow: hidden;
         }
 
-        .menu-grid.layout-grid .food-info {
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-between;
+        .product-card:hover {
+            transform: translateY(-2px);
         }
 
-        .menu-grid.layout-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .menu-grid.layout-list .food-card {
-            background-color: var(--bg-card);
+        .product-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
             border-radius: 8px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            padding: 0.8rem;
-            border: 1px solid var(--primary);
+            margin-bottom: 10px;
         }
 
-        .menu-grid.layout-list .food-info {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
+        .badge-popular {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            z-index: 2;
         }
 
-        .food-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            background-color: #111;
-        }
-
-        .menu-grid.layout-list .food-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 6px;
-            object-fit: cover;
-            margin-right: 1rem;
-            flex-shrink: 0;
-        }
-
-        .food-title {
-            font-size: 1.05rem;
+        .product-info h3 {
+            font-size: 1rem;
             font-weight: 600;
-            color: #ffffff;
+            margin-bottom: 6px;
+            padding-right: 60px;
         }
 
-        .food-desc {
+        .product-info p {
             font-size: 0.8rem;
             color: var(--text-muted);
-            margin-top: 0.3rem;
+            margin-bottom: 12px;
             line-height: 1.3;
         }
 
-        .food-footer {
+        .product-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 0.8rem;
+            margin-top: 10px;
         }
 
-        .food-price {
+        .price {
+            font-weight: 700;
             font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--accent);
+            color: var(--secondary);
         }
 
-        /* Painel ADM */
-        #admin-panel {
+        .add-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .add-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Cart Floating Bar */
+        .cart-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: #ffffff;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.12);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .cart-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cart-icon-wrapper {
+            position: relative;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px; right: -10px;
+            background: var(--accent);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 50%;
+            width: 20px; height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-total-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .cart-total-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .view-cart-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Generic Modal Base */
+        .modal {
             display: none;
-            max-width: 800px;
-            margin: 2rem auto;
-            background: var(--bg-card);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 1px solid var(--primary);
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 300;
+            backdrop-filter: blur(2px);
         }
 
-        #admin-panel h2, #admin-panel h3 {
-            color: var(--accent);
-            margin-bottom: 1rem;
+        .modal.active {
+            display: flex;
+        }
+
+        /* Cart Drawer Slide */
+        .modal-cart {
+            justify-content: flex-end;
+        }
+
+        .modal-cart .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 450px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            animation: slideLeft 0.3s ease-out;
+        }
+
+        @keyframes slideLeft {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Centered Dialog Modals */
+        .modal-center {
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-center .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            animation: popIn 0.25s ease-out;
+            overflow: hidden;
+        }
+
+        .modal-center .modal-content.large {
+            max-width: 800px;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            background: #f8f9fa;
+        }
+
+        /* Cart Items */
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-price {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            background: #e9ecef;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .simulation-banner {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            border-left: 4px solid #ffeba2;
+        }
+
+        /* Admin Tabs & Form Styles */
+        .admin-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 20px;
+            gap: 10px;
+            overflow-x: auto;
+        }
+
+        .admin-tab {
+            padding: 10px 15px;
+            border: none;
+            background: none;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            white-space: nowrap;
+        }
+
+        .admin-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
             font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 0.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-dark);
         }
 
         .form-control {
             width: 100%;
-            padding: 0.7rem;
-            background: #0a4f6d;
-            border: 1px solid var(--primary);
-            color: #fff;
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
             border-radius: 8px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            outline: none;
         }
 
-        .admin-btn {
-            background-color: var(--primary);
-            color: #111;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-right: 0.5rem;
-            margin-top: 0.5rem;
+        .form-control:focus {
+            border-color: var(--primary);
         }
 
-        .admin-btn:hover {
-            background-color: var(--primary-dark);
-            color: #fff;
-        }
-
-        .btn-secondary { background-color: #475569; color: #fff; }
-        .btn-danger { background-color: #ef4444; color: #fff; }
-
-        .admin-section-box {
-            background: #0a4f6d;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--primary);
-        }
-
-        .admin-item-row {
+        .form-row {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #11688c;
-            padding: 0.8rem;
-            margin-bottom: 0.5rem;
-            border-radius: 6px;
-            border: 1px solid rgba(212, 178, 115, 0.3);
+            gap: 15px;
         }
 
-        .delete-btn {
-            background-color: #ef4444;
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .admin-product-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .admin-product-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .admin-product-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-danger-sm {
+            background: #dc3545;
             color: white;
             border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 4px;
+            padding: 6px 10px;
+            border-radius: 6px;
             cursor: pointer;
+            font-size: 0.8rem;
         }
 
-        /* Botão Flutuante IA Chiquinho */
-        #chiquinho-fab {
+        .btn-edit-sm {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* Toast Notification */
+        .toast-container {
             position: fixed;
-            bottom: 20px;
+            top: 20px;
             right: 20px;
-            width: 65px;
-            height: 65px;
-            background-color: var(--primary);
-            border-radius: 50%;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: #323232;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* QR Code & Print Styling */
+        #qrcodeContainer {
             display: flex;
             justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            cursor: pointer;
-            z-index: 1000;
-            border: 2px solid var(--accent);
-            transition: transform 0.2s;
+            margin: 20px 0;
         }
 
-        #chiquinho-fab:hover {
-            transform: scale(1.1);
-        }
-
-        #chiquinho-fab img {
-            width: 45px;
-            height: 45px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        /* Modal do Chiquinho */
-        #chiquinho-modal {
-            display: none;
-            position: fixed;
-            bottom: 95px;
-            right: 20px;
-            width: 350px;
-            max-width: calc(100vw - 40px);
-            height: 480px;
-            background: var(--bg-card);
-            border: 1px solid var(--primary);
-            border-radius: 16px;
-            z-index: 1000;
-            flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            overflow: hidden;
-        }
-
-        .chat-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #111;
-            font-weight: bold;
-        }
-
-        .chat-body {
-            flex-grow: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            font-size: 0.9rem;
-        }
-
-        .chat-msg {
-            padding: 0.7rem 1rem;
-            border-radius: 12px;
-            max-width: 80%;
-            line-height: 1.4;
-        }
-
-        .chat-msg.bot {
-            background: #0a4f6d;
-            color: var(--text-main);
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-            border: 1px solid var(--primary);
-        }
-
-        .chat-msg.user {
-            background: var(--primary);
-            color: #111;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-            font-weight: 500;
-        }
-
-        .chat-footer {
-            padding: 0.8rem;
-            background: #0a4f6d;
-            display: flex;
-            gap: 0.5rem;
-            border-top: 1px solid var(--primary);
-        }
-
-        .chat-input {
-            flex-grow: 1;
-            background: var(--bg-card);
-            border: 1px solid var(--primary);
-            padding: 0.6rem;
+        #qrcodeContainer img {
+            border: 8px solid white;
+            box-shadow: var(--shadow);
             border-radius: 8px;
-            color: white;
-            outline: none;
-            font-size: 0.9rem;
         }
 
-        .chat-send {
-            background: var(--primary);
-            color: #111;
-            border: none;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
+        @media print {
+            body * { visibility: hidden; }
+            #printableArea, #printableArea * { visibility: visible; }
+            #printableArea {
+                position: absolute;
+                left: 0; top: 0;
+                width: 100%;
+                text-align: center;
+                padding: 40px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Splash Screen -->
-    <div id="splash-screen">
-        <div class="splash-content" style="text-align: center;">
-            <img src="1000147088.jpg" alt="Chico do Caranguejo" class="crab-animated">
-            <h2 class="splash-title">Chico do Caranguejo</h2>
+    <!-- Header Navigation & Store Info -->
+    <header id="headerBg">
+        <div class="top-nav">
+            <button class="top-nav-btn" onclick="toggleLanguage()">
+                <span id="langDisplay">🇧🇷 PT</span>
+            </button>
+            <button class="top-nav-btn" onclick="handleLojistaClick()">
+                <i class="fa-solid fa-user-gear"></i> <span id="lojistaBtnText">Modo Lojista</span>
+            </button>
         </div>
-    </div>
 
-    <!-- Header -->
-    <header>
-        <div style="width: 40px;"></div>
-        <div class="header-title">
-            <h1>Chico do Caranguejo</h1>
-            <p>Fortaleza • Ceará • Desde 1987</p>
+        <div class="header-content">
+            <div class="store-logo" id="storeLogo">🦀</div>
+            <h1 id="storeNameDisplay">Chico do Caranguejo</h1>
+            <p id="storeDescDisplay">Praia do Futuro - Fortaleza/CE | Desde 1987</p>
+            
+            <div class="store-info-pills">
+                <span class="store-pill" id="storeHoursDisplay"><i class="fa-regular fa-clock"></i> 10:00 - 22:00</span>
+                <span class="store-pill" id="storeInstaDisplay"><i class="fa-brands fa-instagram"></i> @chicodocaranguejo</span>
+            </div>
         </div>
-        <button class="admin-lock-btn" onclick="openAdmin()" title="Painel Administrativo">🔒</button>
     </header>
 
-    <!-- Painel ADM -->
-    <div id="admin-panel">
-        <h2>Painel de Controle do Administrador</h2>
-        
-        <div id="login-box">
-            <p style="margin-bottom: 1rem; color: var(--text-muted);">Digite a senha de administrador:</p>
-            <div class="form-group">
-                <input type="password" id="admin-pass" class="form-control" placeholder="Senha de acesso">
-            </div>
-            <button class="admin-btn" onclick="verifyLogin()">Entrar</button>
+    <!-- Controls: Search & Category Filter -->
+    <div class="controls">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Buscar no cardápio..." oninput="filterProducts()">
         </div>
+        <div class="categories" id="categoryContainer"></div>
+    </div>
 
-        <div id="dashboard-box" style="display: none;">
-            <div class="admin-section-box">
-                <h3>⚙️ Configurações Administrativas</h3>
-                <div class="form-group">
-                    <label>Layout do Cardápio</label>
-                    <select id="layout-select" class="form-control" onchange="changeLayout(this.value)">
-                        <option value="grid">Grade Moderna</option>
-                        <option value="list">Lista Compacta</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-top: 1rem;">
-                    <label>Alterar Senha do Administrador</label>
-                    <input type="password" id="new-admin-pass" class="form-control" placeholder="Nova senha">
-                    <button class="admin-btn btn-secondary" onclick="updatePassword()" style="margin-top: 0.5rem;">Salvar Nova Senha</button>
-                </div>
-                <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                    <button class="admin-btn btn-danger" onclick="resetDefaultMenu()">Restaurar Cardápio Padrão</button>
-                    <button class="admin-btn btn-secondary" onclick="closeAdmin()">Sair do Painel</button>
-                </div>
+    <!-- Main Content Grid -->
+    <div class="container" id="menuContainer"></div>
+
+    <!-- Cart Floating Bar -->
+    <div class="cart-bar">
+        <div class="cart-info">
+            <div class="cart-icon-wrapper">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge" id="cartBadge">0</span>
             </div>
-
-            <div class="admin-section-box">
-                <h3>➕ Adicionar / Editar Produto</h3>
-                <div class="form-group">
-                    <label>Nome do Produto</label>
-                    <input type="text" id="new-name" class="form-control" placeholder="Ex: Caranguejo à Moda">
-                </div>
-                <div class="form-group">
-                    <label>Categoria</label>
-                    <select id="new-category" class="form-control">
-                        <option value="entradas">Entradas & Petiscos</option>
-                        <option value="peixes">Peixes</option>
-                        <option value="frutos-do-mar">Frutos do Mar</option>
-                        <option value="carnes">Carnes e Aves</option>
-                        <option value="guarnicoes">Guarnições & Saladas</option>
-                        <option value="sobremesas">Sobremesas</option>
-                        <option value="bebidas">Bebidas, Sucos & Drinks</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Preço (R$)</label>
-                    <input type="number" step="0.01" id="new-price" class="form-control" placeholder="Ex: 49.90">
-                </div>
-                <div class="form-group">
-                    <label>Descrição / Ingredientes / Medida</label>
-                    <input type="text" id="new-desc" class="form-control" placeholder="Ex: 350g com acompanhamentos.">
-                </div>
-                <div class="form-group">
-                    <label>Link da Imagem (Opcional)</label>
-                    <input type="text" id="new-img" class="form-control" placeholder="https://exemplo.com/foto.jpg">
-                </div>
-                <button class="admin-btn" onclick="addProduct()">Salvar Produto</button>
+            <div>
+                <div class="cart-total-text" id="cartLabelTotal">Total da Comanda</div>
+                <div class="cart-total-amount" id="cartTotalBar">R$ 0,00</div>
             </div>
+        </div>
+        <button class="view-cart-btn" id="viewCartBtn" onclick="toggleCartModal(true)">Ver Comanda</button>
+    </div>
 
-            <div class="admin-section-box">
-                <h3>📋 Produtos Cadastrados (<span id="total-count">0</span>)</h3>
-                <div id="admin-products-list" style="max-height: 250px; overflow-y: auto;"></div>
+    <!-- Cart Modal (Drawer) -->
+    <div class="modal modal-cart" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalCartTitle">Sua Comanda</h2>
+                <button class="close-btn" onclick="toggleCartModal(false)">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItemsContainer"></div>
+            <div class="modal-footer">
+                <div id="simulationBannerContainer"></div>
+                <div style="display:flex; justify-content:space-between; font-size:1.1rem; font-weight:bold;">
+                    <span id="modalCartTotalLabel">Total:</span>
+                    <span id="cartTotalModal">R$ 0,00</span>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn" onclick="sendOrder()">Finalizar Pedido</button>
             </div>
         </div>
     </div>
 
-    <!-- Área do Cliente -->
-    <div id="client-view">
-        <div class="search-container">
-            <input type="text" id="search-input" class="search-input" placeholder="O que você deseja procurar hoje?" oninput="filterMenu()">
-        </div>
-
-        <div class="categories-container" id="category-filters">
-            <button class="cat-btn active" onclick="setCategory('todos', event)">Todos</button>
-            <button class="cat-btn" onclick="setCategory('entradas', event)">Entradas & Petiscos</button>
-            <button class="cat-btn" onclick="setCategory('peixes', event)">Peixes</button>
-            <button class="cat-btn" onclick="setCategory('frutos-do-mar', event)">Frutos do Mar</button>
-            <button class="cat-btn" onclick="setCategory('carnes', event)">Carnes e Aves</button>
-            <button class="cat-btn" onclick="setCategory('guarnicoes', event)">Guarnições</button>
-            <button class="cat-btn" onclick="setCategory('sobremesas', event)">Sobremesas</button>
-            <button class="cat-btn" onclick="setCategory('bebidas', event)">Bebidas & Drinks</button>
-        </div>
-
-        <main class="menu-section">
-            <div class="menu-grid layout-grid" id="menu-grid"></div>
-        </main>
-    </div>
-
-    <!-- Botão Flutuante IA Chiquinho -->
-    <div id="chiquinho-fab" onclick="toggleChiquinho()" title="Fale com o Chiquinho!">
-        <img src="1000147089.jpg" alt="Chiquinho IA">
-    </div>
-
-    <!-- Chat Modal Chiquinho -->
-    <div id="chiquinho-modal">
-        <div class="chat-header">
-            <span>🦀 Chiquinho (Assistente Virtual)</span>
-            <button onclick="toggleChiquinho()" style="background:none; border:none; color:#111; font-size:1rem; cursor:pointer; font-weight:bold;">✕</button>
-        </div>
-        <div class="chat-body" id="chat-body">
-            <div class="chat-msg bot">Olá! Sou o <strong>Chiquinho</strong>, seu assistente virtual do Chico do Caranguejo. Como posso te ajudar hoje? (Busque pratos, preços ou informações sobre o Aquachico!)</div>
-        </div>
-        <div class="chat-footer">
-            <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua dúvida..." onkeypress="handleChatKey(event)">
-            <button class="chat-send" onclick="sendChatMessage()">Enviar</button>
+    <!-- Login Access Modal (E-mail e Senha) -->
+    <div class="modal modal-center" id="pinModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-lock"></i> Acesso Lojista</h2>
+                <button class="close-btn" onclick="toggleModal('pinModal', false)">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px; line-height:1.4;">
+                    Entre com seu e-mail e senha cadastrados para acessar o painel.<br>
+                    <small style="color:var(--primary-dark); font-weight:600;">* Primeiro acesso? Use a senha padrão: <code>@1234#</code></small>
+                </p>
+                <div class="form-group">
+                    <label>E-mail de Acesso</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="admin@chicodocaranguejo.com.br">
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Digite sua senha" onkeyup="if(event.key==='Enter') verifyLogin()">
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align:right;">
+                <button class="add-btn" style="width:100%; justify-content:center;" onclick="verifyLogin()">Entrar</button>
+            </div>
         </div>
     </div>
 
+    <!-- Admin Panel Modal -->
+    <div class="modal modal-center" id="adminModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-sliders"></i> Painel do Lojista</h2>
+                <button class="close-btn" onclick="toggleModal('adminModal', false)">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Admin Tabs -->
+                <div class="admin-tabs">
+                    <button class="admin-tab active" onclick="switchAdminTab('tabConfig')"><i class="fa-solid fa-store"></i> Estabelecimento</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tabCatalog')"><i class="fa-solid fa-utensils"></i> Catálogo de Produtos</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tabQr')"><i class="fa-solid fa-qrcode"></i> QR Code & Divulgação</button>
+                </div>
+
+                <!-- Tab 1: Configurações do Estabelecimento -->
+                <div id="tabConfig" class="admin-tab-content">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome da Loja</label>
+                            <input type="text" id="cfgStoreName" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Logo / Emoji</label>
+                            <input type="text" id="cfgLogo" class="form-control" placeholder="Ex: 🦀">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição Curta</label>
+                        <input type="text" id="cfgDesc" class="form-control">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>WhatsApp (com DDD)</label>
+                            <input type="text" id="cfgWhatsapp" class="form-control" placeholder="5585999999999">
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram</label>
+                            <input type="text" id="cfgInstagram" class="form-control" placeholder="@sualoja">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Horário de Funcionamento</label>
+                            <input type="text" id="cfgHours" class="form-control" placeholder="10:00 - 22:00">
+                        </div>
+                        <div class="form-group">
+                            <label>Modo de Vendas</label>
+                            <select id="cfgSalesMode" class="form-control">
+                                <option value="direct">Venda Direta (Pedido via WhatsApp)</option>
+                                <option value="simulation">Simulação de Conta (Prévia para Garçom)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço Completo</label>
+                        <input type="text" id="cfgAddress" class="form-control">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>URL da Foto de Capa</label>
+                            <input type="text" id="cfgCoverUrl" class="form-control" placeholder="https://...">
+                        </div>
+                        <div class="form-group">
+                            <label>Ou Galeria / Upload de Capa</label>
+                            <input type="file" id="cfgCoverFile" accept="image/*" class="form-control" onchange="handleCoverUpload(this)">
+                        </div>
+                    </div>
+                    <hr style="margin: 15px 0; border: none; border-top: 1px solid var(--border-color);">
+                    <h4 style="font-size:0.95rem; margin-bottom:10px; color:var(--primary-dark);"><i class="fa-solid fa-user-shield"></i> Credenciais de Acesso Lojista</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>E-mail de Acesso</label>
+                            <input type="email" id="cfgEmail" class="form-control" placeholder="admin@chicodocaranguejo.com.br">
+                        </div>
+                        <div class="form-group">
+                            <label>Nova Senha de Acesso</label>
+                            <input type="password" id="cfgPassword" class="form-control" placeholder="Digite a nova senha">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Gerenciamento do Catálogo -->
+                <div id="tabCatalog" class="admin-tab-content" style="display:none;">
+                    <h4 id="catalogFormTitle" style="margin-bottom:12px; font-size:1rem;">Adicionar Novo Produto</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome (Português)</label>
+                            <input type="text" id="prodNamePt" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Nome (Inglês - Opcional)</label>
+                            <input type="text" id="prodNameEn" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Preço (R$)</label>
+                            <input type="number" step="0.01" id="prodPrice" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Categoria</label>
+                            <input type="text" id="prodCategory" class="form-control" placeholder="Ex: Entradas">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea id="prodDesc" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>URL da Imagem</label>
+                            <input type="text" id="prodImgUrl" class="form-control" placeholder="https://...">
+                        </div>
+                        <div class="form-group">
+                            <label>Ou Upload de Foto</label>
+                            <input type="file" id="prodImgFile" accept="image/*" class="form-control" onchange="handleImageUpload(this)">
+                        </div>
+                    </div>
+
+                    <div style="display:flex; gap:10px; margin-bottom:20px;">
+                        <button class="add-btn" id="btnSaveProduct" onclick="saveProduct()">
+                            <i class="fa-solid fa-plus" id="btnSaveProductIcon"></i> <span id="btnSaveProductText">Cadastrar Produto</span>
+                        </button>
+                        <button class="cat-btn" id="btnCancelEdit" style="display:none;" onclick="cancelEditProduct()">
+                            <i class="fa-solid fa-xmark"></i> Cancelar Edição
+                        </button>
+                    </div>
+
+                    <h4 style="margin-bottom:12px; font-size:1rem;">Produtos Cadastrados</h4>
+                    <div id="adminProductList" style="max-height:250px; overflow-y:auto;"></div>
+                </div>
+
+                <!-- Tab 3: QR Code & Divulgação -->
+                <div id="tabQr" class="admin-tab-content" style="display:none; text-align:center;">
+                    <p style="font-size:0.9rem; color:var(--text-muted);">Aponte a câmera para acessar o cardápio digital:</p>
+                    <div id="qrcodeContainer"></div>
+                    <div class="form-group" style="max-width:400px; margin:0 auto 15px;">
+                        <input type="text" id="qrUrlInput" class="form-control" readonly>
+                    </div>
+                    <div style="display:flex; justify-content:center; gap:10px;">
+                        <button class="cat-btn" onclick="copyStoreUrl()"><i class="fa-solid fa-copy"></i> Copiar Link</button>
+                        <button class="cat-btn active" onclick="printQrSheet()"><i class="fa-solid fa-print"></i> Imprimir Placa QR Code</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center;">
+                <button class="btn-danger-sm" onclick="restoreDefaults()">Restaurar Demonstração</button>
+                <button class="checkout-btn" style="width:auto; padding:8px 20px;" onclick="saveAdminSettings()">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Printable QR Code Template -->
+    <div id="printableArea" style="display:none;">
+        <h1 id="printStoreName" style="font-size:2.5rem; margin-bottom:10px;">Chico do Caranguejo</h1>
+        <p style="font-size:1.2rem; color:#555; margin-bottom:30px;">Acesse nosso cardápio digital!</p>
+        <div id="printQrCode"></div>
+        <p id="printStoreUrl" style="font-size:1.1rem; margin-top:20px; font-weight:bold;"></p>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Application Script -->
     <script>
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('splash-screen').classList.add('fade-out');
-            }, 1500);
-            loadLayoutPreference();
-        });
+        // Dados Padrão de Inicialização (Factory Reset)
+        const defaultStoreConfig = {
+            email: "admin@chicodocaranguejo.com.br",
+            password: "@1234#",
+            name: "Chico do Caranguejo",
+            logo: "🦀",
+            description: "Praia do Futuro - Fortaleza/CE | Desde 1987",
+            descriptionEn: "Praia do Futuro - Fortaleza/CE | Since 1987",
+            whatsapp: "5585999999999",
+            address: "Av. Clóvis Arrais Maia, 4930 - Praia do Futuro, Fortaleza - CE",
+            hours: "10:00 - 22:00",
+            instagram: "@chicodocaranguejo",
+            coverUrl: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
+            salesMode: "direct" // 'direct' ou 'simulation'
+        };
 
-        // Banco de dados completo extraído do PDF
-        const defaultMenu = [
-            // Entradas & Petiscos / Porções / Caldinhos / Pastéis
-            { id: 1, name: "Caranguejo à Moda do Chico", category: "entradas", price: 49.90, desc: "Porção com 3 unidades ao molho de coco e temperos exclusivos.", img: "" },
-            { id: 2, name: "Maminha em Tiras com Fritas", category: "entradas", price: 74.90, desc: "250g de maminha em tiras com batata frita.", img: "" },
-            { id: 3, name: "Picanha em Tiras com Fritas", category: "entradas", price: 89.90, desc: "250g de picanha em tiras com batata frita.", img: "" },
-            { id: 4, name: "Arroz de Camarão", category: "entradas", price: 79.90, desc: "Arroz cremoso com camarões.", img: "" },
-            { id: 5, name: "Camarões à Milanesa", category: "entradas", price: 89.90, desc: "12 unidades de camarões à milanesa.", img: "" },
-            { id: 6, name: "Filé de Camarões Grelhados", category: "entradas", price: 89.90, desc: "350g de camarões grelhados com alho e azeite.", img: "" },
-            { id: 7, name: "Camarão Crocante com Cream Cheese", category: "entradas", price: 74.90, desc: "6 unidades de camarões empanados com cream cheese.", img: "" },
-            { id: 8, name: "Camarão ao Alho e Óleo", category: "entradas", price: 69.90, desc: "300g de camarão refogado com alho e azeite.", img: "" },
-            { id: 9, name: "Atolado de Caranguejo", category: "entradas", price: 79.90, desc: "Delicioso arroz cremoso refogado com carne de caranguejo.", img: "" },
-            { id: 10, name: "Patinha de Caranguejo ao Vinagrete", category: "entradas", price: 69.90, desc: "12 unidades de patinha de caranguejo ao vinagrete.", img: "" },
-            { id: 11, name: "Patinha de Caranguejo à Milanesa", category: "entradas", price: 64.90, desc: "12 unidades de patinha de caranguejo à milanesa.", img: "" },
-            { id: 12, name: "Casquinha de Caranguejo", category: "entradas", price: 43.90, desc: "150g de carne de caranguejo.", img: "" },
-            { id: 13, name: "Dueto de Caranguejo", category: "entradas", price: 74.90, desc: "Porção com 3 unidades ao molho de coco e patinha de caranguejo.", img: "" },
-            { id: 14, name: "Frango à Passarinho com Fritas", category: "entradas", price: 54.90, desc: "300g de frango à passarinho com batata frita.", img: "" },
-            { id: 15, name: "Isca de Peixe Crocante", category: "entradas", price: 64.90, desc: "250g de iscas de filé de peixe empanado.", img: "" },
-            { id: 16, name: "Croquete de Bacalhau", category: "entradas", price: 64.90, desc: "12 unidades de croquete de bacalhau.", img: "" },
-            { id: 17, name: "Macaxeira Frita", category: "entradas", price: 34.90, desc: "250g de macaxeira frita.", img: "" },
-            { id: 18, name: "Batata Frita", category: "entradas", price: 34.90, desc: "250g de batata frita.", img: "" },
-            { id: 19, name: "Queijo Coalho Grelhado", category: "entradas", price: 28.90, desc: "250g de queijo coalho grelhado.", img: "" },
-            { id: 20, name: "Pastel de Carne de Sol", category: "entradas", price: 29.90, desc: "6 unidades de pastel de carne de sol.", img: "" },
-            { id: 21, name: "Pastel de Queijo", category: "entradas", price: 29.90, desc: "6 unidades de pastel de queijo.", img: "" },
-            { id: 22, name: "Pastel de Carne Moída e Azeitonas", category: "entradas", price: 29.90, desc: "6 unidades de pastel de carne moída e azeitonas.", img: "" },
-            { id: 23, name: "Pastel de Camarão com Catupiry", category: "entradas", price: 36.90, desc: "6 unidades de pastel de camarão com catupiry.", img: "" },
-            { id: 24, name: "Pastel de Caranguejo", category: "entradas", price: 39.90, desc: "6 unidades de pastel de caranguejo.", img: "" },
-            { id: 25, name: "Carne de Sol com Macaxeira", category: "entradas", price: 79.90, desc: "250g de carne de sol com macaxeira.", img: "" },
-            { id: 26, name: "Filé Trinchado", category: "entradas", price: 89.90, desc: "250g de filé trinchado.", img: "" },
-            { id: 27, name: "Caldinho de Camarão", category: "entradas", price: 27.90, desc: "Caldinho quente de camarão.", img: "" },
-            { id: 28, name: "Caldinho de Peixe", category: "entradas", price: 19.90, desc: "Caldinho quente de peixe.", img: "" },
-            { id: 29, name: "Caldinho de Sururu", category: "entradas", price: 19.90, desc: "Caldinho quente de sururu.", img: "" },
-            { id: 30, name: "Caldinho de Caranguejo", category: "entradas", price: 23.90, desc: "Caldinho quente de caranguejo.", img: "" },
-            { id: 31, name: "Torresmo", category: "entradas", price: 32.90, desc: "200g de torresmo crocante.", img: "" },
-            { id: 32, name: "Piabinha Frita", category: "entradas", price: 42.90, desc: "350g de piabinha frita.", img: "" },
-            { id: 33, name: "Feijão Verde com Carne do Sol", category: "entradas", price: 43.90, desc: "Feijão verde com carne do sol e queijo coalho.", img: "" },
-            { id: 34, name: "Dadinho de Tapioca", category: "entradas", price: 42.90, desc: "Dadinhos de tapioca crocantes.", img: "" },
-            { id: 35, name: "Bolinha de Carne do Sol", category: "entradas", price: 39.90, desc: "12 unidades de bolinha de carne do sol.", img: "" },
-            { id: 36, name: "Bolinha de Queijo", category: "entradas", price: 39.90, desc: "12 unidades de bolinha de queijo.", img: "" },
-            { id: 37, name: "Bolinha de Peixe", category: "entradas", price: 39.90, desc: "12 unidades de bolinha de peixe.", img: "" },
-            { id: 38, name: "Bolinha de Caranguejo", category: "entradas", price: 48.90, desc: "12 unidades de bolinha de caranguejo.", img: "" },
-            { id: 39, name: "Coxinha de Caranguejo", category: "entradas", price: 34.90, desc: "7 unidades de coxinhas de caranguejo.", img: "" },
-            { id: 40, name: "Moqueca de Arraia", category: "entradas", price: 59.90, desc: "Moqueca de arraia temperada.", img: "" },
-            { id: 41, name: "Ostras Gratinadas", category: "entradas", price: 74.90, desc: "12 unidades de ostras gratinadas.", img: "" },
-            { id: 42, name: "Ostras Naturais", category: "entradas", price: 61.90, desc: "12 unidades de ostras naturais.", img: "" },
-            { id: 43, name: "Polvo ao Vinagrete com Torradas", category: "entradas", price: 84.90, desc: "Polvo fresco ao vinagrete servido com torradas.", img: "" },
-
-            // Peixes
-            { id: 44, name: "Filé de Peixe Grelhado", category: "peixes", price: 144.90, desc: "350g de filé de peixe grelhado acompanhado de arroz branco e legumes.", img: "" },
-            { id: 45, name: "Filé de Peixe ao Molho de Camarão", category: "peixes", price: 189.90, desc: "350g de filé de peixe grelhado ao molho de camarão.", img: "" },
-            { id: 46, name: "Salmão na Crosta", category: "peixes", price: 174.90, desc: "Salmão grelhado na crosta de castanha, servido com purê e arroz preto.", img: "" },
-            { id: 47, name: "Peixada de Tilápia", category: "peixes", price: 179.90, desc: "Tilápia servida com macaxeira frita, pirão e farofa.", img: "" },
-            { id: 48, name: "Tilápia Frita", category: "peixes", price: 149.90, desc: "Tilápia inteira frita com legumes e arroz branco.", img: "" },
-            { id: 49, name: "Peixada com Camarões", category: "peixes", price: 269.90, desc: "Peixe vermelho, arroz, pirão, legumes e ovos cozidos.", img: "" },
-            { id: 50, name: "Peixada ao Chico do Caranguejo", category: "peixes", price: 239.90, desc: "Peixe vermelho no molho de camarão servido com arroz branco.", img: "" },
-            { id: 51, name: "Peixe Frito ao Molho de Camarão", category: "peixes", price: 259.90, desc: "Peixe vermelho ao molho de camarão servido com baião e farofa.", img: "" },
-            { id: 52, name: "Peixe Família (4 pessoas)", category: "peixes", price: 299.90, desc: "Peixe vermelho de 1,5kg, baião, macaxeira e farofa.", img: "" },
-            { id: 53, name: "Peixe Frito", category: "peixes", price: 224.90, desc: "Peixe vermelho fresco acompanhado de baião, macaxeira e farofa.", img: "" },
-            { id: 54, name: "Moqueca Cearense", category: "peixes", price: 219.90, desc: "Filé de peixe fresco grelhado, tomate, cebola, pimentões, arroz de açafrão e pirão.", img: "" },
-            { id: 55, name: "Filé de Tilápia", category: "peixes", price: 149.90, desc: "350g de filé de tilápia grelhada no azeite extra virgem, batata rústica.", img: "" },
-            { id: 56, name: "Sirigado Nordestino", category: "peixes", price: 169.90, desc: "Sirigado em manteiga da terra com camarões e brócolis.", img: "" },
-            { id: 57, name: "Salmão Grelhado com Camarões", category: "peixes", price: 179.90, desc: "Salmão grelhado com camarões refogados, arroz e legumes.", img: "" },
-            { id: 58, name: "Filé de Peixe com Batata Rústica", category: "peixes", price: 154.90, desc: "Filé de peixe com batata rústica, ovos de codorna, champignon e palmito.", img: "" },
-            { id: 59, name: "Filé de Peixe à Moda do Chef", category: "peixes", price: 169.90, desc: "Filé de peixe com castanhas ao vapor e batata cozida.", img: "" },
-            { id: 60, name: "Filé de Peixe à Delícia", category: "peixes", price: 159.90, desc: "Filé de peixe gratinado, bananas empanadas com molho branco.", img: "" },
-
-            // Frutos do Mar
-            { id: 61, name: "Camarão no Coco", category: "frutos-do-mar", price: 164.90, desc: "Camarões no coco, creme de leite e leite de coco com arroz.", img: "" },
-            { id: 62, name: "Camarão na Moranga", category: "frutos-do-mar", price: 164.90, desc: "Camarões na moranga com catupiry.", img: "" },
-            { id: 63, name: "Camarão Tropical", category: "frutos-do-mar", price: 164.90, desc: "Camarões tropicais servidos no abacaxi com arroz branco.", img: "" },
-            { id: 64, name: "Camarão Alfredo", category: "frutos-do-mar", price: 159.90, desc: "Camarões com molho alfredo e bacon sobre fettuccine.", img: "" },
-            { id: 65, name: "Camarão do Chico", category: "frutos-do-mar", price: 159.90, desc: "300g de camarões refogados sobre arroz cremoso com presunto, gratinado com queijo.", img: "" },
-            { id: 66, name: "Lagostas Grelhadas", category: "frutos-do-mar", price: 279.90, desc: "Lagostas inteiras grelhadas na manteiga com legumes.", img: "" },
-            { id: 67, name: "Fartura do Chico do Caranguejo", category: "frutos-do-mar", price: 329.90, desc: "Mix completo com lagosta, peixe, camarão, polvo e arroz de camarão.", img: "" },
-            { id: 68, name: "Caudas de Lagostas com Arroz de Camarão", category: "frutos-do-mar", price: 299.90, desc: "Caudas de lagosta grelhadas com arroz de camarão.", img: "" },
-            { id: 69, name: "Terra e Mar", category: "frutos-do-mar", price: 159.90, desc: "Mix de camarão empanado, queijo gratinado e carne de sol.", img: "" },
-            { id: 70, name: "Camarão à Grega", category: "frutos-do-mar", price: 154.90, desc: "Camarões empanados à grega com arroz à grega e batata palha.", img: "" },
-
-            // Carnes e Aves
-            { id: 71, name: "Filé Mignon Alfredo", category: "carnes", price: 169.90, desc: "Medalhões de filé mignon com bacon e molho madeira, fettuccine alfredo.", img: "" },
-            { id: 72, name: "Carne de Sol da Terra", category: "carnes", price: 159.90, desc: "Carne de sol 350g com manteiga da terra e macaxeira.", img: "" },
-            { id: 73, name: "Carne de Sol Sertaneja", category: "carnes", price: 159.90, desc: "350g de carne de sol, baião de dois, paçoca, macaxeira, banana e queijo coalho.", img: "" },
-            { id: 74, name: "Filé à Parmegiana", category: "carnes", price: 149.90, desc: "Filé mignon à milanesa com molho de tomate, purê e arroz.", img: "" },
-            { id: 75, name: "Filé Mignon Grelhado", category: "carnes", price: 144.90, desc: "Filé mignon grelhado com arroz e purê.", img: "" },
-            { id: 76, name: "Filé ao Medalhão", category: "carnes", price: 149.90, desc: "Filé mignon com bacon e molho madeira.", img: "" },
-            { id: 77, name: "Frango Grelhado", category: "carnes", price: 94.90, desc: "Filé de frango grelhado com arroz branco e legumes.", img: "" },
-            { id: 78, name: "Frango à Parmegiana", category: "carnes", price: 129.90, desc: "Frango à parmegiana com arroz e fritas.", img: "" },
-            { id: 79, name: "Escondidinho de Carne de Sol", category: "carnes", price: 169.90, desc: "Escondidinho cremoso de carne de sol com purê de macaxeira.", img: "" },
-            { id: 80, name: "Maminha Importada", category: "carnes", price: 139.90, desc: "Maminha com batata frita e paçoca.", img: "" },
-            { id: 81, name: "Picanha do Sol", category: "carnes", price: 174.90, desc: "Picanha do sol com baião de dois e fritas.", img: "" },
-            { id: 82, name: "Picanha Importada", category: "carnes", price: 169.90, desc: "Picanha importada grelhada com baião de dois e fritas.", img: "" },
-            { id: 83, name: "Picanha Importada (Individual)", category: "carnes", price: 89.90, desc: "Porção individual de picanha importada.", img: "" },
-            { id: 84, name: "Camarão do Chico (Individual)", category: "frutos-do-mar", price: 79.90, desc: "Porção individual de camarão do Chico.", img: "" },
-            { id: 85, name: "Filé de Frango (Individual)", category: "carnes", price: 59.90, desc: "Porção individual de filé de frango.", img: "" },
-            { id: 86, name: "Filé de Peixe Grelhado (Individual)", category: "peixes", price: 79.90, desc: "Porção individual de peixe grelhado.", img: "" },
-            { id: 87, name: "Filé Mignon Grelhado (Individual)", category: "carnes", price: 79.90, desc: "Porção individual de filé mignon grelhado.", img: "" },
-            { id: 88, name: "Salmão Grelhado com Camarões (Individual)", category: "peixes", price: 89.90, desc: "Porção individual de salmão com camarões.", img: "" },
-            { id: 89, name: "Spaghetti à Bolonhesa (Kids)", category: "carnes", price: 46.90, desc: "Spaghetti com molho à bolonhesa infantil.", img: "" },
-            { id: 90, name: "Filezinho de Peixe Empanado (Kids)", category: "peixes", price: 54.90, desc: "Peixe empanado infantil com arroz e purê.", img: "" },
-            { id: 91, name: "Nugget de Frango (Kids)", category: "carnes", price: 47.90, desc: "Nuggets de frango com batata frita.", img: "" },
-            { id: 92, name: "Filé Mignon Kaka (Kids)", category: "carnes", price: 54.90, desc: "Filé mignon em cubos infantil com arroz.", img: "" },
-
-            // Guarnições & Saladas
-            { id: 93, name: "Paçoca (200g)", category: "guarnicoes", price: 19.90, desc: "200g de paçoca de carne de sol.", img: "" },
-            { id: 94, name: "Risoto de Brócolis com Castanha", category: "guarnicoes", price: 89.90, desc: "350g de risoto de brócolis com castanha.", img: "" },
-            { id: 95, name: "Purê de Batatas", category: "guarnicoes", price: 19.90, desc: "350g de purê de batatas cremoso.", img: "" },
-            { id: 96, name: "Pirão de Peixe", category: "guarnicoes", price: 21.90, desc: "350g de pirão de peixe.", img: "" },
-            { id: 97, name: "Pirão de Caranguejo", category: "guarnicoes", price: 26.90, desc: "350g de pirão de caranguejo.", img: "" },
-            { id: 98, name: "Arroz à Piamontese", category: "guarnicoes", price: 24.90, desc: "350g de arroz à piamontese.", img: "" },
-            { id: 99, name: "Baião de Dois", category: "guarnicoes", price: 26.90, desc: "350g de baião de dois tradicional.", img: "" },
-            { id: 100, name: "Feijão", category: "guarnicoes", price: 17.90, desc: "350g de feijão caldoso.", img: "" },
-            { id: 101, name: "Arroz de Brócolis", category: "guarnicoes", price: 21.90, desc: "350g de arroz de brócolis.", img: "" },
-            { id: 102, name: "Arroz à Grega", category: "guarnicoes", price: 19.90, desc: "350g de arroz à grega.", img: "" },
-            { id: 103, name: "Arroz Branco", category: "guarnicoes", price: 17.90, desc: "350g de arroz branco.", img: "" },
-            { id: 104, name: "Salada Verde", category: "guarnicoes", price: 28.90, desc: "Alface, tomate, cebola, pimentões e azeitonas.", img: "" },
-            { id: 105, name: "Salada Caesar", category: "guarnicoes", price: 58.90, desc: "Mix de folhas verdes, tomate cereja, croutons e queijo parmesão.", img: "" },
-            { id: 106, name: "Salada do Chico", category: "guarnicoes", price: 49.90, desc: "Mix de folhas verdes, tomate cereja, tiras de manga, castanha e molho pesto.", img: "" },
-
-            // Sobremesas
-            { id: 107, name: "Petit Gateau com Sorvete", category: "sobremesas", price: 29.90, desc: "Bolinho de chocolate com recheio cremoso e sorvete.", img: "" },
-            { id: 108, name: "Sensação do Chico (Taça)", category: "sobremesas", price: 39.90, desc: "Delicioso ganache de chocolate, frutas, sorvete de creme e chantilly.", img: "" },
-            { id: 109, name: "Taça Delícia de Abacaxi", category: "sobremesas", price: 32.90, desc: "Sobremesa cremosa de abacaxi com chantilly.", img: "" },
-            { id: 110, name: "Pudim de Leite", category: "sobremesas", price: 18.90, desc: "Pudim de leite condensado tradicional.", img: "" },
-            { id: 111, name: "Brownie com Sorvete", category: "sobremesas", price: 29.90, desc: "Brownie com calda de chocolate quente e sorvete de creme.", img: "" },
-            { id: 112, name: "Cocada ao Forno com Sorvete de Creme", category: "sobremesas", price: 26.90, desc: "Cocada cremosa ao forno com sorvete.", img: "" },
-            { id: 113, name: "Salada de Frutas Tropicais", category: "sobremesas", price: 19.90, desc: "Frutas frescas da estação.", img: "" },
-
-            // Bebidas, Sucos & Drinks
-            { id: 114, name: "Suco de Limão", category: "bebidas", price: 12.90, desc: "Suco natural 300ml.", img: "" },
-            { id: 115, name: "Suco de Laranja com Morango", category: "bebidas", price: 19.90, desc: "Suco natural 300ml.", img: "" },
-            { id: 116, name: "Suco de Morango", category: "bebidas", price: 19.90, desc: "Suco natural 300ml.", img: "" },
-            { id: 117, name: "Suco de Abacaxi", category: "bebidas", price: 12.90, desc: "Suco natural 300ml.", img: "" },
-            { id: 118, name: "Suco de Abacaxi com Hortelã", category: "bebidas", price: 12.90, desc: "Suco natural 300ml.", img: "" },
-            { id: 119, name: "Suco de Maracujá", category: "bebidas", price: 13.90, desc: "Suco natural 300ml.", img: "" },
-            { id: 120, name: "Suco de Laranja", category: "bebidas", price: 13.90, desc: "Suco natural 300ml.", img: "" },
-            { id: 121, name: "Suco de Acerola", category: "bebidas", price: 12.90, desc: "Suco natural 300ml.", img: "" },
-            { id: 122, name: "Suco de Graviola", category: "bebidas", price: 12.90, desc: "Suco natural 300ml.", img: "" },
-            { id: 123, name: "Suco de Cajá", category: "bebidas", price: 13.90, desc: "Suco natural 300ml.", img: "" },
-            { id: 124, name: "Cappuccino", category: "bebidas", price: 9.90, desc: "Café cappuccino quente.", img: "" },
-            { id: 125, name: "Café Expresso", category: "bebidas", price: 8.90, desc: "Café expresso.", img: "" },
-            { id: 126, name: "Monster 269ml", category: "bebidas", price: 18.90, desc: "Energético Monster.", img: "" },
-            { id: 127, name: "Schweppes Citrus", category: "bebidas", price: 9.90, desc: "Refrigerante Schweppes Citrus.", img: "" },
-            { id: 128, name: "Schweppes Tônica", category: "bebidas", price: 9.90, desc: "Refrigerante Schweppes Tônica.", img: "" },
-            { id: 129, name: "Refrigerante KS", category: "bebidas", price: 9.90, desc: "Refrigerante garrafa KS.", img: "" },
-            { id: 130, name: "H2OH Limão", category: "bebidas", price: 10.90, desc: "Água tônica saborizada H2OH.", img: "" },
-            { id: 131, name: "Água Crystal Sem Gás", category: "bebidas", price: 5.90, desc: "Água mineral sem gás 500ml.", img: "" },
-            { id: 132, name: "Água Crystal Com Gás", category: "bebidas", price: 5.90, desc: "Água mineral com gás 500ml.", img: "" },
-            { id: 133, name: "Jarra Coco Verde 700ml", category: "bebidas", price: 19.90, desc: "Jarra de água de coco verde 700ml.", img: "" },
-            { id: 134, name: "Coco Verde", category: "bebidas", price: 8.90, desc: "Água de coco verde gelada.", img: "" },
-            { id: 135, name: "Cerveja Heineken 600ml", category: "bebidas", price: 25.90, desc: "Garrafa 600ml bem gelada.", img: "" },
-            { id: 136, name: "Cerveja Budweiser 600ml", category: "bebidas", price: 21.90, desc: "Garrafa 600ml.", img: "" },
-            { id: 137, name: "Cerveja Stella Artois 600ml", category: "bebidas", price: 24.90, desc: "Garrafa 600ml.", img: "" },
-            { id: 138, name: "Cerveja Spaten 600ml", category: "bebidas", price: 22.90, desc: "Garrafa 600ml.", img: "" },
-            { id: 139, name: "Cerveja Original 600ml", category: "bebidas", price: 22.90, desc: "Garrafa 600ml.", img: "" },
-            { id: 140, name: "Aquachico - Meia Entrada (Promoção)", category: "bebidas", price: 40.00, desc: "Acesso ao parque aquático. De R$ 80,00 por R$ 40,00.", img: "" }
+        const defaultProducts = [
+            { id: 1, category: "Entradas", categoryEn: "Starters", name: "Caranguejo à Moda do Chico", nameEn: "Chico's Style Crab", description: "Porção com 3 unidades ao molho de coco e verduras, acompanhados de farofa e molho verde.", descriptionEn: "3 crabs cooked in coconut sauce with veggies, served with toasted cassava flour and green sauce.", price: 49.90, favorite: true },
+            { id: 2, category: "Entradas", categoryEn: "Starters", name: "Dueto de Caranguejo", nameEn: "Crab Duo", description: "150g de carne de caranguejo e 6 unid. de patinha de caranguejo.", descriptionEn: "150g of shredded crab meat and 6 crab claws.", price: 74.90, favorite: true },
+            { id: 3, category: "Entradas", categoryEn: "Starters", name: "Casquinha de Caranguejo (150g)", nameEn: "Stuffed Crab Shell", description: "Casquinha recheada com pura carne de caranguejo.", descriptionEn: "Crab shell stuffed with seasoned crab meat.", price: 43.90 },
+            { id: 4, category: "Entradas", categoryEn: "Starters", name: "Patinha de Caranguejo à Milanesa (12 unid.)", nameEn: "Breaded Crab Claws (12 pcs)", description: "12 unidades de patinhas empanadas e crocantes.", descriptionEn: "12 crispy breaded crab claws.", price: 64.90 },
+            { id: 7, category: "Entradas", categoryEn: "Starters", name: "Camarão ao Alho e Óleo (300g)", nameEn: "Garlic Butter Shrimp (300g)", description: "Camarões grelhados com alho e azeite.", descriptionEn: "Grilled shrimp sauteed with garlic and olive oil.", price: 64.90 },
+            { id: 42, category: "Peixes", categoryEn: "Fish", name: "Peixe Frito", nameEn: "Fried Red Snapper", description: "Peixe vermelho de 1,2kg, baião, macaxeira e farofa.", descriptionEn: "1.2kg whole red snapper served with rice, beans, cassava and farofa.", price: 224.90, favorite: true },
+            { id: 56, category: "Frutos do Mar", categoryEn: "Seafood", name: "Camarão do Chico", nameEn: "Chico's Special Shrimp", description: "300g de camarões refogados, servidos sobre arroz cremoso com presunto, molho branco, gratinado com queijo e batata palha.", descriptionEn: "300g sautéed shrimp over creamy rice, ham, white sauce, melted cheese and potato sticks.", price: 159.90, favorite: true },
+            { id: 69, category: "Carnes e Aves", categoryEn: "Meat & Poultry", name: "Carne de Sol Sertaneja", nameEn: "Traditional Sun-Dried Beef", description: "350g de carne de sol, baião, paçoca, macaxeira, banana empanada e queijo coalho.", descriptionEn: "350g sun-dried beef served with rice and beans mix, cassava, fried banana and grilled cheese.", price: 159.90, favorite: true },
+            { id: 95, category: "Sobremesas", categoryEn: "Desserts", name: "Sensação do Chico", nameEn: "Chico's Sensation Dessert", description: "Ganache de chocolate, farofa de bolo, sorvete de creme e chantilly.", descriptionEn: "Chocolate ganache, cake crumbles, vanilla ice cream and whipped cream.", price: 39.90, favorite: true },
+            { id: 96, category: "Bebidas & Sucos", categoryEn: "Drinks & Juices", name: "Sucos Naturais (300ml)", nameEn: "Fresh Natural Juices (300ml)", description: "Cajá, Graviola, Acerola, Laranja, Maracujá, Abacaxi ou Limão.", descriptionEn: "Tropical fruit juices: Cajá, Soursop, Acerola, Orange, Passion Fruit, Pineapple or Lime.", price: 12.90 }
         ];
 
-        let menuItems = JSON.parse(localStorage.getItem('chico_menu')) || defaultMenu;
-        let currentCategory = 'todos';
+        // Dicionário Multilíngue (UI Labels)
+        const i18n = {
+            pt: {
+                searchPlaceholder: "Buscar no cardápio...",
+                all: "Todos",
+                totalCommand: "Total da Comanda",
+                viewCart: "Ver Comanda",
+                myCart: "Sua Comanda",
+                cartEmpty: "Sua comanda está vazia.",
+                total: "Total:",
+                checkoutWhatsApp: "Finalizar Pedido (WhatsApp)",
+                checkoutSimulate: "Simular Conta",
+                add: "Adicionar",
+                popular: "Mais Pedido",
+                lojistaMode: "Modo Lojista",
+                simulationNotice: "Modo Simulação: Apresente esta prévia de consumo ao garçom.",
+                orderSuccessMsg: "Pedido preparado! Redirecionando para o WhatsApp...",
+                simulationSuccessMsg: "Simulação de conta concluída com sucesso!"
+            },
+            en: {
+                searchPlaceholder: "Search menu...",
+                all: "All",
+                totalCommand: "Order Total",
+                viewCart: "View Bill",
+                myCart: "Your Order",
+                cartEmpty: "Your order is empty.",
+                total: "Total:",
+                checkoutWhatsApp: "Send Order (WhatsApp)",
+                checkoutSimulate: "Simulate Bill",
+                add: "Add",
+                popular: "Best Seller",
+                lojistaMode: "Store Manager",
+                simulationNotice: "Simulation Mode: Present this bill preview to your waiter.",
+                orderSuccessMsg: "Order prepared! Redirecting to WhatsApp...",
+                simulationSuccessMsg: "Bill simulation completed successfully!"
+            }
+        };
 
-        function renderMenu(itemsToRender) {
-            const grid = document.getElementById('menu-grid');
-            grid.innerHTML = '';
+        // Estado Global
+        let storeConfig = JSON.parse(localStorage.getItem('chico_config')) || defaultStoreConfig;
+        let products = JSON.parse(localStorage.getItem('chico_products')) || defaultProducts;
+        let cart = [];
+        let currentCategory = "Todos";
+        let currentLang = 'pt';
+        let isAuthenticated = false;
+        let uploadedBase64Img = "";
+        let uploadedCoverBase64 = "";
+        let editingProductId = null;
 
-            if (itemsToRender.length === 0) {
-                grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); grid-column: 1/-1; padding: 3rem 0;">Nenhum item encontrado.</div>`;
+        // Migração suave de versão legada com PIN
+        if (!storeConfig.password) storeConfig.password = storeConfig.pin || "@1234#";
+        if (!storeConfig.email) storeConfig.email = "admin@chicodocaranguejo.com.br";
+
+        // Inicialização
+        document.addEventListener("DOMContentLoaded", () => {
+            renderHeader();
+            renderCategories();
+            renderProducts();
+            updateCartUI();
+
+            // Fechamento de Modais via Tecla ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    toggleCartModal(false);
+                    toggleModal('pinModal', false);
+                    toggleModal('adminModal', false);
+                }
+            });
+
+            // Fechamento ao Clicar Fora dos Modais
+            window.onclick = (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.classList.remove('active');
+                }
+            };
+        });
+
+        // Alternância de Idioma (PT / EN)
+        function toggleLanguage() {
+            currentLang = currentLang === 'pt' ? 'en' : 'pt';
+            document.getElementById('langDisplay').innerText = currentLang === 'pt' ? '🇧🇷 PT' : '🇺🇸 EN';
+            
+            if (currentLang === 'en') {
+                autoTranslateCatalogWithAI();
+            }
+
+            renderHeader();
+            renderCategories();
+            renderProducts();
+            updateCartUI();
+        }
+
+        // Tradução Automática via IA (API Pública MyMemory)
+        async function autoTranslateCatalogWithAI() {
+            showToast("Traduzindo conteúdo com IA...");
+            let updated = false;
+
+            if (!storeConfig.descriptionEn || storeConfig.descriptionEn === storeConfig.description) {
+                try {
+                    const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(storeConfig.description)}&langpair=pt|en`);
+                    const data = await res.json();
+                    if (data.responseData?.translatedText) {
+                        storeConfig.descriptionEn = data.responseData.translatedText;
+                        updated = true;
+                    }
+                } catch(e) { console.error("Erro ao traduzir loja:", e); }
+            }
+
+            for (let p of products) {
+                if (!p.nameEn || p.nameEn === p.name) {
+                    try {
+                        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(p.name)}&langpair=pt|en`);
+                        const data = await res.json();
+                        if (data.responseData?.translatedText) {
+                            p.nameEn = data.responseData.translatedText;
+                            updated = true;
+                        }
+                    } catch(e){}
+                }
+                if (!p.descriptionEn || p.descriptionEn === p.description) {
+                    try {
+                        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(p.description)}&langpair=pt|en`);
+                        const data = await res.json();
+                        if (data.responseData?.translatedText) {
+                            p.descriptionEn = data.responseData.translatedText;
+                            updated = true;
+                        }
+                    } catch(e){}
+                }
+            }
+
+            if (updated) {
+                localStorage.setItem('chico_config', JSON.stringify(storeConfig));
+                localStorage.setItem('chico_products', JSON.stringify(products));
+            }
+
+            showToast("Tradução com IA concluída!");
+            renderHeader();
+            renderProducts();
+        }
+
+        // Renderização do Cabeçalho
+        function renderHeader() {
+            document.getElementById("pageTitle").innerText = `${storeConfig.name} - ${currentLang === 'pt' ? 'Cardápio Digital' : 'Digital Menu'}`;
+            document.getElementById("storeLogo").innerText = storeConfig.logo || "🦀";
+            document.getElementById("storeNameDisplay").innerText = storeConfig.name;
+            document.getElementById("storeDescDisplay").innerText = currentLang === 'pt' ? storeConfig.description : (storeConfig.descriptionEn || storeConfig.description);
+            document.getElementById("storeHoursDisplay").innerHTML = `<i class="fa-regular fa-clock"></i> ${storeConfig.hours}`;
+            document.getElementById("storeInstaDisplay").innerHTML = `<i class="fa-brands fa-instagram"></i> ${storeConfig.instagram}`;
+            
+            if (storeConfig.coverUrl) {
+                document.getElementById("headerBg").style.backgroundImage = `url('${storeConfig.coverUrl}')`;
+            }
+
+            document.getElementById("searchInput").placeholder = i18n[currentLang].searchPlaceholder;
+            document.getElementById("lojistaBtnText").innerText = i18n[currentLang].lojistaMode;
+        }
+
+        // Renderização das Categorias
+        function renderCategories() {
+            const rawCategories = [...new Set(products.map(p => currentLang === 'pt' ? p.category : (p.categoryEn || p.category)))];
+            const categories = [i18n[currentLang].all, ...rawCategories];
+            
+            const container = document.getElementById("categoryContainer");
+            container.innerHTML = categories.map(cat => `
+                <button class="cat-btn ${cat === currentCategory || (currentCategory === 'Todos' && cat === i18n[currentLang].all) ? 'active' : ''}" onclick="selectCategory('${cat}')">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function selectCategory(category) {
+            currentCategory = (category === i18n['pt'].all || category === i18n['en'].all) ? "Todos" : category;
+            renderCategories();
+            renderProducts();
+        }
+
+        // Renderização dos Produtos
+        function renderProducts() {
+            const container = document.getElementById("menuContainer");
+            const searchVal = document.getElementById("searchInput").value.toLowerCase();
+
+            const filteredProducts = products.filter(p => {
+                const name = currentLang === 'pt' ? p.name : (p.nameEn || p.name);
+                const desc = currentLang === 'pt' ? p.description : (p.descriptionEn || p.description);
+                const category = currentLang === 'pt' ? p.category : (p.categoryEn || p.category);
+
+                const matchesCat = currentCategory === "Todos" || category === currentCategory;
+                const matchesSearch = name.toLowerCase().includes(searchVal) || desc.toLowerCase().includes(searchVal);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-muted);">Nenhum produto encontrado.</div>`;
                 return;
             }
 
-            const isList = grid.classList.contains('layout-list');
+            const categoriesToDisplay = currentCategory === "Todos" 
+                ? [...new Set(filteredProducts.map(p => currentLang === 'pt' ? p.category : (p.categoryEn || p.category)))] 
+                : [currentCategory];
 
-            itemsToRender.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'food-card';
+            container.innerHTML = categoriesToDisplay.map(cat => {
+                const catItems = filteredProducts.filter(p => (currentLang === 'pt' ? p.category : (p.categoryEn || p.category)) === cat);
+                return `
+                    <div class="section-title"><i class="fa-solid fa-utensils"></i> ${cat}</div>
+                    <div class="product-grid">
+                        ${catItems.map(p => {
+                            const name = currentLang === 'pt' ? p.name : (p.nameEn || p.name);
+                            const desc = currentLang === 'pt' ? p.description : (p.descriptionEn || p.description);
+                            return `
+                                <div class="product-card">
+                                    ${p.favorite ? `<span class="badge-popular">${i18n[currentLang].popular}</span>` : ''}
+                                    ${p.image ? `<img src="${p.image}" class="product-img" alt="${name}">` : ''}
+                                    <div class="product-info">
+                                        <h3>${name}</h3>
+                                        <p>${desc}</p>
+                                    </div>
+                                    <div class="product-bottom">
+                                        <span class="price">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
+                                        <button class="add-btn" onclick="addToCart(${p.id})">
+                                            <i class="fa-solid fa-plus"></i> ${i18n[currentLang].add}
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterProducts() {
+            renderProducts();
+        }
+
+        // Gestão do Carrinho
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast(`${product.name} adicionado!`);
+        }
+
+        function changeQty(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (!item) return;
+
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter(i => i.id !== productId);
+            }
+
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+            const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            document.getElementById("cartBadge").innerText = totalQty;
+            document.getElementById("cartTotalBar").innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+            document.getElementById("cartTotalModal").innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+
+            document.getElementById("cartLabelTotal").innerText = i18n[currentLang].totalCommand;
+            document.getElementById("viewCartBtn").innerText = i18n[currentLang].viewCart;
+            document.getElementById("modalCartTitle").innerText = i18n[currentLang].myCart;
+            document.getElementById("modalCartTotalLabel").innerText = i18n[currentLang].total;
+
+            const checkoutBtn = document.getElementById("checkoutBtn");
+            const simContainer = document.getElementById("simulationBannerContainer");
+
+            if (storeConfig.salesMode === "simulation") {
+                checkoutBtn.innerText = i18n[currentLang].checkoutSimulate;
+                simContainer.innerHTML = `<div class="simulation-banner"><i class="fa-solid fa-circle-info"></i> ${i18n[currentLang].simulationNotice}</div>`;
+            } else {
+                checkoutBtn.innerText = i18n[currentLang].checkoutWhatsApp;
+                simContainer.innerHTML = "";
+            }
+
+            const cartContainer = document.getElementById("cartItemsContainer");
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:30px 0;">${i18n[currentLang].cartEmpty}</p>`;
+            } else {
+                cartContainer.innerHTML = cart.map(item => {
+                    const name = currentLang === 'pt' ? item.name : (item.nameEn || item.name);
+                    return `
+                        <div class="cart-item">
+                            <div>
+                                <div class="cart-item-title">${name}</div>
+                                <div class="cart-item-price">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+                            </div>
+                            <div class="qty-controls">
+                                <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                                <span>${item.qty}</span>
+                                <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function toggleCartModal(show) {
+            const modal = document.getElementById("cartModal");
+            if (show) modal.classList.add("active");
+            else modal.classList.remove("active");
+        }
+
+        function toggleModal(modalId, show) {
+            const modal = document.getElementById(modalId);
+            if (show) modal.classList.add("active");
+            else modal.classList.remove("active");
+        }
+
+        // Finalização do Pedido (WhatsApp / Simulação)
+        function sendOrder() {
+            if (cart.length === 0) {
+                showToast("Sua comanda está vazia!");
+                return;
+            }
+
+            if (storeConfig.salesMode === "simulation") {
+                alert(`${i18n[currentLang].simulationSuccessMsg}\n\nTotal: R$ ${cart.reduce((a, b) => a + (b.price * b.qty), 0).toFixed(2)}`);
+                cart = [];
+                updateCartUI();
+                toggleCartModal(false);
+            } else {
+                let msg = `*Novo Pedido - ${storeConfig.name}*\n\n`;
+                cart.forEach(item => {
+                    msg += `• ${item.qty}x ${item.name} - R$ ${(item.price * item.qty).toFixed(2)}\n`;
+                });
+                const total = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+                msg += `\n*Total: R$ ${total.toFixed(2)}*`;
+
+                const phone = storeConfig.whatsapp.replace(/\D/g, '');
+                window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
                 
-                let imgHtml = '';
-                if (item.img && item.img.trim() !== '') {
-                    imgHtml = `<img src="${item.img}" alt="${item.name}" class="food-img" loading="lazy">`;
-                }
-
-                if (isList) {
-                    card.innerHTML = `
-                        ${item.img ? `<img src="${item.img}" alt="${item.name}" class="food-img" loading="lazy">` : ''}
-                        <div class="food-info">
-                            <div>
-                                <div class="food-title">${item.name}</div>
-                                <div class="food-desc">${item.desc}</div>
-                            </div>
-                            <div class="food-price">R$ ${Number(item.price).toFixed(2).replace('.', ',')}</div>
-                        </div>
-                    `;
-                } else {
-                    card.innerHTML = `
-                        ${imgHtml}
-                        <div class="food-info">
-                            <div>
-                                <div class="food-title">${item.name}</div>
-                                <div class="food-desc">${item.desc}</div>
-                            </div>
-                            <div class="food-footer">
-                                <span class="food-price">R$ ${Number(item.price).toFixed(2).replace('.', ',')}</span>
-                            </div>
-                        </div>
-                    `;
-                }
-                grid.appendChild(card);
-            });
+                showToast(i18n[currentLang].orderSuccessMsg);
+                cart = [];
+                updateCartUI();
+                toggleCartModal(false);
+            }
         }
 
-        function setCategory(category, event) {
-            currentCategory = category;
-            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            if (event) event.target.classList.add('active');
-            document.getElementById('search-input').value = '';
-            filterMenu();
-        }
-
-        function filterMenu() {
-            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
-            let filtered = menuItems.filter(item => {
-                const matchesCategory = currentCategory === 'todos' || item.category === currentCategory;
-                const matchesSearch = item.name.toLowerCase().includes(searchTerm) || item.desc.toLowerCase().includes(searchTerm);
-                return matchesCategory && matchesSearch;
-            });
-            renderMenu(filtered);
-        }
-
-        // Painel ADM
-        function openAdmin() {
-            document.getElementById('admin-panel').style.display = 'block';
-            document.getElementById('client-view').style.display = 'none';
-        }
-
-        function closeAdmin() {
-            document.getElementById('admin-panel').style.display = 'none';
-            document.getElementById('client-view').style.display = 'block';
-            filterMenu();
+        // Autenticação & Modo Lojista (Login por E-mail e Senha)
+        function handleLojistaClick() {
+            if (isAuthenticated) {
+                openAdminPanel();
+            } else {
+                document.getElementById("loginEmail").value = "";
+                document.getElementById("loginPassword").value = "";
+                toggleModal("pinModal", true);
+                document.getElementById("loginEmail").focus();
+            }
         }
 
         function verifyLogin() {
-            const pass = document.getElementById('admin-pass').value;
-            const savedPass = localStorage.getItem('chico_admin_pass') || '@chico1987';
-            if (pass === savedPass) {
-                document.getElementById('login-box').style.display = 'none';
-                document.getElementById('dashboard-box').style.display = 'block';
-                renderAdminList();
+            const inputEmail = document.getElementById("loginEmail").value.trim().toLowerCase();
+            const inputPassword = document.getElementById("loginPassword").value;
+
+            const storedEmail = (storeConfig.email || "admin@chicodocaranguejo.com.br").toLowerCase();
+            const storedPassword = storeConfig.password || "@1234#";
+
+            // Permite acesso pela senha padrão inicial @1234# OU combinação correta de E-mail/Senha
+            const isDefaultPassMatch = (inputPassword === "@1234#");
+            const isCredentialMatch = (inputPassword === storedPassword) && (!inputEmail || inputEmail === storedEmail);
+
+            if (isDefaultPassMatch || isCredentialMatch) {
+                isAuthenticated = true;
+                toggleModal("pinModal", false);
+                openAdminPanel();
+                showToast("Acesso liberado com sucesso!");
             } else {
-                alert('Senha incorreta!');
+                showToast("E-mail ou senha incorretos!");
             }
         }
 
-        function updatePassword() {
-            const newPass = document.getElementById('new-admin-pass').value.trim();
-            if (!newPass) { alert('Digite uma senha válida.'); return; }
-            localStorage.setItem('chico_admin_pass', newPass);
-            document.getElementById('new-admin-pass').value = '';
-            alert('Senha alterada com sucesso!');
+        function openAdminPanel() {
+            // Preenche Formulário do Estabelecimento
+            document.getElementById("cfgStoreName").value = storeConfig.name;
+            document.getElementById("cfgLogo").value = storeConfig.logo;
+            document.getElementById("cfgDesc").value = storeConfig.description;
+            document.getElementById("cfgWhatsapp").value = storeConfig.whatsapp;
+            document.getElementById("cfgInstagram").value = storeConfig.instagram;
+            document.getElementById("cfgHours").value = storeConfig.hours;
+            document.getElementById("cfgSalesMode").value = storeConfig.salesMode;
+            document.getElementById("cfgAddress").value = storeConfig.address;
+            document.getElementById("cfgCoverUrl").value = storeConfig.coverUrl;
+            document.getElementById("cfgCoverFile").value = "";
+            uploadedCoverBase64 = "";
+
+            // Credenciais de Acesso
+            document.getElementById("cfgEmail").value = storeConfig.email || "admin@chicodocaranguejo.com.br";
+            document.getElementById("cfgPassword").value = storeConfig.password || "@1234#";
+
+            resetProductForm();
+            renderAdminProductList();
+            generateQRCode();
+            toggleModal("adminModal", true);
         }
 
-        function changeLayout(layoutType) {
-            const grid = document.getElementById('menu-grid');
-            if (layoutType === 'list') {
-                grid.className = 'menu-grid layout-list';
-                localStorage.setItem('chico_layout', 'list');
-            } else {
-                grid.className = 'menu-grid layout-grid';
-                localStorage.setItem('chico_layout', 'grid');
+        function switchAdminTab(tabId) {
+            document.querySelectorAll(".admin-tab").forEach(t => t.classList.remove("active"));
+            document.querySelectorAll(".admin-tab-content").forEach(c => c.style.display = "none");
+            
+            event.currentTarget.classList.add("active");
+            document.getElementById(tabId).style.display = "block";
+        }
+
+        // Cadastro de Foto de Capa por Upload File (Base64)
+        function handleCoverUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedCoverBase64 = e.target.result;
+                };
+                reader.readAsDataURL(file);
             }
-            filterMenu();
         }
 
-        function loadLayoutPreference() {
-            const savedLayout = localStorage.getItem('chico_layout') || 'grid';
-            const grid = document.getElementById('menu-grid');
-            const layoutSelect = document.getElementById('layout-select');
-            if (grid && layoutSelect) {
-                grid.className = `menu-grid layout-${savedLayout}`;
-                layoutSelect.value = savedLayout;
+        // Cadastro de Imagem de Produto por Upload File (Base64)
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedBase64Img = e.target.result;
+                };
+                reader.readAsDataURL(file);
             }
         }
 
-        function resetDefaultMenu() {
-            if (confirm('Deseja restaurar o cardápio padrão?')) {
-                menuItems = [...defaultMenu];
-                localStorage.setItem('chico_menu', JSON.stringify(menuItems));
-                renderAdminList();
-                alert('Cardápio restaurado!');
-            }
-        }
+        // Salvar Produto (Novo ou Edição)
+        function saveProduct() {
+            const namePt = document.getElementById("prodNamePt").value;
+            const nameEn = document.getElementById("prodNameEn").value;
+            const price = parseFloat(document.getElementById("prodPrice").value);
+            const category = document.getElementById("prodCategory").value;
+            const desc = document.getElementById("prodDesc").value;
+            const urlImg = document.getElementById("prodImgUrl").value;
 
-        function addProduct() {
-            const name = document.getElementById('new-name').value.trim();
-            const category = document.getElementById('new-category').value;
-            const price = parseFloat(document.getElementById('new-price').value);
-            const desc = document.getElementById('new-desc').value.trim();
-            const img = document.getElementById('new-img').value.trim();
-
-            if (!name || isNaN(price)) {
-                alert('Preencha o nome e o preço corretamente.');
+            if (!namePt || isNaN(price) || !category) {
+                showToast("Preencha Nome, Preço e Categoria!");
                 return;
             }
 
-            const newItem = { id: Date.now(), name, category, price, desc, img };
-            menuItems.push(newItem);
-            localStorage.setItem('chico_menu', JSON.stringify(menuItems));
+            if (editingProductId !== null) {
+                // Modo de Edição
+                const prodIndex = products.findIndex(p => p.id === editingProductId);
+                if (prodIndex !== -1) {
+                    products[prodIndex] = {
+                        ...products[prodIndex],
+                        name: namePt,
+                        nameEn: nameEn || namePt,
+                        price: price,
+                        category: category,
+                        categoryEn: category,
+                        description: desc,
+                        descriptionEn: desc,
+                        image: uploadedBase64Img || (urlImg !== "" ? urlImg : products[prodIndex].image)
+                    };
+                    showToast("Produto atualizado com sucesso!");
+                }
+            } else {
+                // Modo de Cadastro Novo
+                const newProd = {
+                    id: Date.now(),
+                    name: namePt,
+                    nameEn: nameEn || namePt,
+                    price: price,
+                    category: category,
+                    categoryEn: category,
+                    description: desc,
+                    descriptionEn: desc,
+                    image: uploadedBase64Img || urlImg || "",
+                    favorite: false
+                };
+                products.push(newProd);
+                showToast("Produto cadastrado com sucesso!");
+            }
 
-            document.getElementById('new-name').value = '';
-            document.getElementById('new-price').value = '';
-            document.getElementById('new-desc').value = '';
-            document.getElementById('new-img').value = '';
+            resetProductForm();
+            renderAdminProductList();
+            renderCategories();
+            renderProducts();
+        }
 
-            renderAdminList();
-            alert('Produto salvo com sucesso!');
+        // Iniciar Edição de Produto
+        function editProduct(id) {
+            const prod = products.find(p => p.id === id);
+            if (!prod) return;
+
+            editingProductId = id;
+            document.getElementById("catalogFormTitle").innerText = "Editar Produto";
+            document.getElementById("prodNamePt").value = prod.name || "";
+            document.getElementById("prodNameEn").value = prod.nameEn || "";
+            document.getElementById("prodPrice").value = prod.price || "";
+            document.getElementById("prodCategory").value = prod.category || "";
+            document.getElementById("prodDesc").value = prod.description || "";
+            document.getElementById("prodImgUrl").value = (prod.image && !prod.image.startsWith("data:")) ? prod.image : "";
+            document.getElementById("prodImgFile").value = "";
+            uploadedBase64Img = "";
+
+            document.getElementById("btnSaveProductText").innerText = "Atualizar Produto";
+            document.getElementById("btnSaveProductIcon").className = "fa-solid fa-check";
+            document.getElementById("btnCancelEdit").style.display = "inline-flex";
+
+            document.getElementById("catalogFormTitle").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Resetar Formulário de Produto
+        function resetProductForm() {
+            editingProductId = null;
+            document.getElementById("catalogFormTitle").innerText = "Adicionar Novo Produto";
+            document.getElementById("prodNamePt").value = "";
+            document.getElementById("prodNameEn").value = "";
+            document.getElementById("prodPrice").value = "";
+            document.getElementById("prodCategory").value = "";
+            document.getElementById("prodDesc").value = "";
+            document.getElementById("prodImgUrl").value = "";
+            document.getElementById("prodImgFile").value = "";
+            uploadedBase64Img = "";
+
+            document.getElementById("btnSaveProductText").innerText = "Cadastrar Produto";
+            document.getElementById("btnSaveProductIcon").className = "fa-solid fa-plus";
+            document.getElementById("btnCancelEdit").style.display = "none";
+        }
+
+        function cancelEditProduct() {
+            resetProductForm();
+            showToast("Edição cancelada.");
         }
 
         function deleteProduct(id) {
-            if (confirm('Deseja excluir este item?')) {
-                menuItems = menuItems.filter(item => item.id !== id);
-                localStorage.setItem('chico_menu', JSON.stringify(menuItems));
-                renderAdminList();
+            if (editingProductId === id) {
+                resetProductForm();
             }
+            products = products.filter(p => p.id !== id);
+            renderAdminProductList();
+            renderCategories();
+            renderProducts();
+            showToast("Produto removido!");
         }
 
-        function renderAdminList() {
-            const listContainer = document.getElementById('admin-products-list');
-            document.getElementById('total-count').innerText = menuItems.length;
-            listContainer.innerHTML = '';
+        function renderAdminProductList() {
+            const container = document.getElementById("adminProductList");
+            container.innerHTML = products.map(p => `
+                <div class="admin-product-item">
+                    <div class="admin-product-info">
+                        <h4>${p.name}</h4>
+                        <span>R$ ${p.price.toFixed(2)} | ${p.category}</span>
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn-edit-sm" onclick="editProduct(${p.id})"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn-danger-sm" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Geração do QR Code e Impressão
+        function generateQRCode() {
+            const container = document.getElementById("qrcodeContainer");
+            container.innerHTML = "";
+            const url = window.location.href;
             
-            menuItems.forEach(item => {
-                const row = document.createElement('div');
-                row.className = 'admin-item-row';
-                row.innerHTML = `
-                    <div><strong>${item.name}</strong> - R$ ${Number(item.price).toFixed(2).replace('.', ',')} ${item.img ? '(Com Imagem)' : '(Sem Imagem)'}</div>
-                    <button class="delete-btn" onclick="deleteProduct(${item.id})">Excluir</button>
-                `;
-                listContainer.appendChild(row);
+            new QRCode(container, {
+                text: url,
+                width: 180,
+                height: 180
+            });
+
+            document.getElementById("qrUrlInput").value = url;
+            document.getElementById("printStoreName").innerText = storeConfig.name;
+            document.getElementById("printStoreUrl").innerText = url;
+
+            const printContainer = document.getElementById("printQrCode");
+            printContainer.innerHTML = "";
+            new QRCode(printContainer, {
+                text: url,
+                width: 250,
+                height: 250
             });
         }
 
-        // Inteligência Artificial "Chiquinho"
-        function toggleChiquinho() {
-            const modal = document.getElementById('chiquinho-modal');
-            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        function copyStoreUrl() {
+            const input = document.getElementById("qrUrlInput");
+            input.select();
+            navigator.clipboard.writeText(input.value);
+            showToast("Link copiado para a área de transferência!");
         }
 
-        function handleChatKey(e) {
-            if (e.key === 'Enter') sendChatMessage();
+        function printQrSheet() {
+            window.print();
         }
 
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim();
-            if (!text) return;
+        // Salvar Configurações
+        function saveAdminSettings() {
+            storeConfig.name = document.getElementById("cfgStoreName").value;
+            storeConfig.logo = document.getElementById("cfgLogo").value;
+            storeConfig.description = document.getElementById("cfgDesc").value;
+            storeConfig.whatsapp = document.getElementById("cfgWhatsapp").value;
+            storeConfig.instagram = document.getElementById("cfgInstagram").value;
+            storeConfig.hours = document.getElementById("cfgHours").value;
+            storeConfig.salesMode = document.getElementById("cfgSalesMode").value;
+            storeConfig.address = document.getElementById("cfgAddress").value;
+            storeConfig.coverUrl = uploadedCoverBase64 || document.getElementById("cfgCoverUrl").value;
+            
+            // Atualiza Credenciais
+            storeConfig.email = document.getElementById("cfgEmail").value.trim();
+            storeConfig.password = document.getElementById("cfgPassword").value || "@1234#";
 
-            appendMessage(text, 'user');
-            input.value = '';
+            uploadedCoverBase64 = "";
 
-            setTimeout(() => {
-                processChiquinhoResponse(text.toLowerCase());
-            }, 600);
+            localStorage.setItem('chico_config', JSON.stringify(storeConfig));
+            localStorage.setItem('chico_products', JSON.stringify(products));
+
+            renderHeader();
+            renderCategories();
+            renderProducts();
+            updateCartUI();
+
+            toggleModal("adminModal", false);
+            showToast("Alterações salvas com sucesso!");
         }
 
-        function appendMessage(text, sender) {
-            const body = document.getElementById('chat-body');
-            const msg = document.createElement('div');
-            msg.className = `chat-msg ${sender}`;
-            msg.innerHTML = text;
-            body.appendChild(msg);
-            body.scrollTop = body.scrollHeight;
-        }
-
-        function processChiquinhoResponse(query) {
-            let response = "Hmm, não encontrei exatamente o que você procurou. Tente buscar pelo nome de um prato (ex: *caranguejo*, *moqueca*, *picanha*) ou pergunte sobre o *Aquachico* e *reservas*! 🦀";
-
-            if (query.includes('aquachico') || query.includes('parque') || query.includes('ingresso') || query.includes('pulseira')) {
-                response = "🌊 O **Aquachico** funciona de segunda a domingo, das 09h às 17h! A pulseira promocional meia para todos está por **R$ 40,00** (crianças até 12 anos não pagam pulseira se acompanhadas de adulto pagante).";
-            } else if (query.includes('reserva') || query.includes('telefone') || query.includes('contato') || query.includes('evento')) {
-                response = "📞 Você pode fazer reservas e orçamentos para eventos pelo WhatsApp: **(85) 99233-4602**!";
-            } else {
-                const found = menuItems.filter(i => i.name.toLowerCase().includes(query) || i.category.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query));
-                if (found.length > 0) {
-                    response = `Encontrei estes itens para você:<br><br>` + found.map(i => `• <b>${i.name}</b> - R$ ${Number(i.price).toFixed(2).replace('.', ',')}<br><small>${i.desc}</small>`).join('<br><br>');
-                }
+        // Restaurar Padrão de Fábrica
+        function restoreDefaults() {
+            if (confirm("Deseja restaurar todas as configurações e catálogo originais?")) {
+                localStorage.removeItem('chico_config');
+                localStorage.removeItem('chico_products');
+                storeConfig = { ...defaultStoreConfig };
+                products = [ ...defaultProducts ];
+                resetProductForm();
+                saveAdminSettings();
+                showToast("Demonstração restaurada!");
             }
-            appendMessage(response, 'bot');
         }
 
-        renderMenu(menuItems);
+        // Helper: Toast Notifications
+        function showToast(msg) {
+            const container = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+            toast.className = "toast";
+            toast.innerText = msg;
+            container.appendChild(toast);
+
+            setTimeout(() => toast.classList.add("show"), 10);
+            setTimeout(() => {
+                toast.classList.remove("show");
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
     </script>
 </body>
 </html>
