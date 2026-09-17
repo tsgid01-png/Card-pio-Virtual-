@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Chico do Caranguejo - Cardápio Digital</title>
+    <title id="pageTitle">Cardápio Virtual</title>
     <!-- Google Fonts, Font Awesome Icons & QRCode.js CDN -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -706,12 +706,12 @@
 
         <div class="header-content">
             <div class="store-logo" id="storeLogo">🦀</div>
-            <h1 id="storeNameDisplay">Chico do Caranguejo</h1>
+            <h1 id="storeNameDisplay">Cardápio Virtual</h1>
             <p id="storeDescDisplay">Praia do Futuro - Fortaleza/CE | Desde 1987</p>
             
             <div class="store-info-pills">
                 <span class="store-pill" id="storeHoursDisplay"><i class="fa-regular fa-clock"></i> 10:00 - 22:00</span>
-                <span class="store-pill" id="storeInstaDisplay"><i class="fa-brands fa-instagram"></i> @chicodocaranguejo</span>
+                <span class="store-pill" id="storeInstaDisplay"><i class="fa-brands fa-instagram"></i> @cardapiovirtual</span>
             </div>
         </div>
     </header>
@@ -776,7 +776,7 @@
                 </p>
                 <div class="form-group">
                     <label>E-mail de Acesso</label>
-                    <input type="email" id="loginEmail" class="form-control" placeholder="admin@chicodocaranguejo.com.br">
+                    <input type="email" id="loginEmail" class="form-control" placeholder="admin@cardapiovirtual.com.br">
                 </div>
                 <div class="form-group">
                     <label>Senha</label>
@@ -862,7 +862,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>E-mail de Acesso</label>
-                            <input type="email" id="cfgEmail" class="form-control" placeholder="admin@chicodocaranguejo.com.br">
+                            <input type="email" id="cfgEmail" class="form-control" placeholder="admin@cardapiovirtual.com.br">
                         </div>
                         <div class="form-group">
                             <label>Nova Senha de Acesso</label>
@@ -945,7 +945,7 @@
 
     <!-- Printable QR Code Template -->
     <div id="printableArea" style="display:none;">
-        <h1 id="printStoreName" style="font-size:2.5rem; margin-bottom:10px;">Chico do Caranguejo</h1>
+        <h1 id="printStoreName" style="font-size:2.5rem; margin-bottom:10px;">Cardápio Virtual</h1>
         <p style="font-size:1.2rem; color:#555; margin-bottom:30px;">Acesse nosso cardápio digital!</p>
         <div id="printQrCode"></div>
         <p id="printStoreUrl" style="font-size:1.1rem; margin-top:20px; font-weight:bold;"></p>
@@ -958,30 +958,30 @@
     <script>
         // Dados Padrão de Inicialização (Factory Reset)
         const defaultStoreConfig = {
-            email: "admin@chicodocaranguejo.com.br",
+            email: "admin@cardapiovirtual.com.br",
             password: "@1234#",
-            name: "Chico do Caranguejo",
+            name: "Cardápio Virtual",
             logo: "🦀",
             description: "Praia do Futuro - Fortaleza/CE | Desde 1987",
             descriptionEn: "Praia do Futuro - Fortaleza/CE | Since 1987",
             whatsapp: "5585999999999",
             address: "Av. Clóvis Arrais Maia, 4930 - Praia do Futuro, Fortaleza - CE",
             hours: "10:00 - 22:00",
-            instagram: "@chicodocaranguejo",
+            instagram: "@cardapiovirtual",
             coverUrl: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
             salesMode: "direct" // 'direct' ou 'simulation'
         };
 
         const defaultProducts = [
-            { id: 1, category: "Entradas", categoryEn: "Starters", name: "Caranguejo à Moda do Chico", nameEn: "Chico's Style Crab", description: "Porção com 3 unidades ao molho de coco e verduras, acompanhados de farofa e molho verde.", descriptionEn: "3 crabs cooked in coconut sauce with veggies, served with toasted cassava flour and green sauce.", price: 49.90, favorite: true },
+            { id: 1, category: "Entradas", categoryEn: "Starters", name: "Caranguejo à Moda da Casa", nameEn: "House Special Crab", description: "Porção com 3 unidades ao molho de coco e verduras, acompanhados de farofa e molho verde.", descriptionEn: "3 crabs cooked in coconut sauce with veggies, served with toasted cassava flour and green sauce.", price: 49.90, favorite: true },
             { id: 2, category: "Entradas", categoryEn: "Starters", name: "Dueto de Caranguejo", nameEn: "Crab Duo", description: "150g de carne de caranguejo e 6 unid. de patinha de caranguejo.", descriptionEn: "150g of shredded crab meat and 6 crab claws.", price: 74.90, favorite: true },
             { id: 3, category: "Entradas", categoryEn: "Starters", name: "Casquinha de Caranguejo (150g)", nameEn: "Stuffed Crab Shell", description: "Casquinha recheada com pura carne de caranguejo.", descriptionEn: "Crab shell stuffed with seasoned crab meat.", price: 43.90 },
             { id: 4, category: "Entradas", categoryEn: "Starters", name: "Patinha de Caranguejo à Milanesa (12 unid.)", nameEn: "Breaded Crab Claws (12 pcs)", description: "12 unidades de patinhas empanadas e crocantes.", descriptionEn: "12 crispy breaded crab claws.", price: 64.90 },
             { id: 7, category: "Entradas", categoryEn: "Starters", name: "Camarão ao Alho e Óleo (300g)", nameEn: "Garlic Butter Shrimp (300g)", description: "Camarões grelhados com alho e azeite.", descriptionEn: "Grilled shrimp sauteed with garlic and olive oil.", price: 64.90 },
             { id: 42, category: "Peixes", categoryEn: "Fish", name: "Peixe Frito", nameEn: "Fried Red Snapper", description: "Peixe vermelho de 1,2kg, baião, macaxeira e farofa.", descriptionEn: "1.2kg whole red snapper served with rice, beans, cassava and farofa.", price: 224.90, favorite: true },
-            { id: 56, category: "Frutos do Mar", categoryEn: "Seafood", name: "Camarão do Chico", nameEn: "Chico's Special Shrimp", description: "300g de camarões refogados, servidos sobre arroz cremoso com presunto, molho branco, gratinado com queijo e batata palha.", descriptionEn: "300g sautéed shrimp over creamy rice, ham, white sauce, melted cheese and potato sticks.", price: 159.90, favorite: true },
+            { id: 56, category: "Frutos do Mar", categoryEn: "Seafood", name: "Camarão Especial", nameEn: "Special Shrimp", description: "300g de camarões refogados, servidos sobre arroz cremoso com presunto, molho branco, gratinado com queijo e batata palha.", descriptionEn: "300g sautéed shrimp over creamy rice, ham, white sauce, melted cheese and potato sticks.", price: 159.90, favorite: true },
             { id: 69, category: "Carnes e Aves", categoryEn: "Meat & Poultry", name: "Carne de Sol Sertaneja", nameEn: "Traditional Sun-Dried Beef", description: "350g de carne de sol, baião, paçoca, macaxeira, banana empanada e queijo coalho.", descriptionEn: "350g sun-dried beef served with rice and beans mix, cassava, fried banana and grilled cheese.", price: 159.90, favorite: true },
-            { id: 95, category: "Sobremesas", categoryEn: "Desserts", name: "Sensação do Chico", nameEn: "Chico's Sensation Dessert", description: "Ganache de chocolate, farofa de bolo, sorvete de creme e chantilly.", descriptionEn: "Chocolate ganache, cake crumbles, vanilla ice cream and whipped cream.", price: 39.90, favorite: true },
+            { id: 95, category: "Sobremesas", categoryEn: "Desserts", name: "Sensação da Casa", nameEn: "House Sensation Dessert", description: "Ganache de chocolate, farofa de bolo, sorvete de creme e chantilly.", descriptionEn: "Chocolate ganache, cake crumbles, vanilla ice cream and whipped cream.", price: 39.90, favorite: true },
             { id: 96, category: "Bebidas & Sucos", categoryEn: "Drinks & Juices", name: "Sucos Naturais (300ml)", nameEn: "Fresh Natural Juices (300ml)", description: "Cajá, Graviola, Acerola, Laranja, Maracujá, Abacaxi ou Limão.", descriptionEn: "Tropical fruit juices: Cajá, Soursop, Acerola, Orange, Passion Fruit, Pineapple or Lime.", price: 12.90 }
         ];
 
@@ -1036,7 +1036,7 @@
 
         // Migração suave de versão legada com PIN
         if (!storeConfig.password) storeConfig.password = storeConfig.pin || "@1234#";
-        if (!storeConfig.email) storeConfig.email = "admin@chicodocaranguejo.com.br";
+        if (!storeConfig.email) storeConfig.email = "admin@cardapiovirtual.com.br";
 
         // Inicialização
         document.addEventListener("DOMContentLoaded", () => {
@@ -1352,7 +1352,7 @@
             const inputEmail = document.getElementById("loginEmail").value.trim().toLowerCase();
             const inputPassword = document.getElementById("loginPassword").value;
 
-            const storedEmail = (storeConfig.email || "admin@chicodocaranguejo.com.br").toLowerCase();
+            const storedEmail = (storeConfig.email || "admin@cardapiovirtual.com.br").toLowerCase();
             const storedPassword = storeConfig.password || "@1234#";
 
             // Permite acesso pela senha padrão inicial @1234# OU combinação correta de E-mail/Senha
@@ -1384,7 +1384,7 @@
             uploadedCoverBase64 = "";
 
             // Credenciais de Acesso
-            document.getElementById("cfgEmail").value = storeConfig.email || "admin@chicodocaranguejo.com.br";
+            document.getElementById("cfgEmail").value = storeConfig.email || "admin@cardapiovirtual.com.br";
             document.getElementById("cfgPassword").value = storeConfig.password || "@1234#";
 
             resetProductForm();
